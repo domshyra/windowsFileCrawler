@@ -74,7 +74,7 @@ addFilesToOutput(root, filesDictionary[root])
 dashedLines.append("</ul> \n </div> \n </body>")
 
 #write new lines to tree.txt file
-with open('tree.html', 'w') as writeFile:
+with open('tableOfContents.html', 'w') as writeFile:
     writeFile.writelines(dashedLines)
 
 #close 
