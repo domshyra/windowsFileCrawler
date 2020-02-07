@@ -8,26 +8,26 @@ filename = input("type file input file name: ")
 with open(filename) as readFile:
     lines = [line.rstrip() for line in readFile]
 
-dashedLines = []
+outputLines = []
 filesDictionary = OrderedDict() 
 currentDepth = 0
 
 #region <head>
 #start head and scripts
-dashedLines.append("<head>")
+outputLines.append("<head>")
 #js
-dashedLines.append('<script type="text/javascript" async="" src="tree.js"></script>')
+outputLines.append('<script type="text/javascript" async="" src="tree.js"></script>')
 #css
-dashedLines.append('<link type="text/css" rel="stylesheet" href="tree.css">')
-dashedLines.append('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">')
-dashedLines.append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">')
+outputLines.append('<link type="text/css" rel="stylesheet" href="tree.css">')
+outputLines.append('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">')
+outputLines.append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">')
 #close
-dashedLines.append("</head>")
+outputLines.append("</head>")
 
 #endregion
 
 #start ul
-dashedLines.append("<body> \n <div class='col-12'> \n <ul id='my-dir'\n")
+outputLines.append("<body> \n <div class='col-12'> \n <ul id='my-dir'\n")
 
 #remove the drive letter
 startPath = lines[0][3:]
@@ -57,25 +57,25 @@ def addFilesToOutput(key, folderArray):
     pathArray = key.split('\\')
     fileLocation = len(pathArray) - 2
     folder = pathArray[fileLocation]
-    dashedLines.append('<li><span class="caret text-primary font-weight-bold"><i class="far fa-folder-open"></i> ' + folder  + '</span>\n <ul class="nested active">\n')
+    outputLines.append('<li><span class="caret text-primary font-weight-bold"><i class="far fa-folder-open"></i> ' + folder  + '</span>\n <ul class="nested active">\n')
     for folderName in folderArray:
         path = key  + folderName + '\\'
         if path in filesDictionary:
             addFilesToOutput(path, filesDictionary[path])
         else:
-            dashedLines.append("<li>" + folderName + '</li>\n')
-    dashedLines.append("</ul>\n")
-    dashedLines.append("</li>\n")
+            outputLines.append("<li>" + folderName + '</li>\n')
+    outputLines.append("</ul>\n")
+    outputLines.append("</li>\n")
 
 #recursivly output the file structure
 addFilesToOutput(root, filesDictionary[root])
 
 #close UL
-dashedLines.append("</ul> \n </div> \n </body>")
+outputLines.append("</ul> \n </div> \n </body>")
 
 #write new lines to tree.txt file
 with open('tableOfContents.html', 'w') as writeFile:
-    writeFile.writelines(dashedLines)
+    writeFile.writelines(outputLines)
 
 #close 
 readFile.close()
